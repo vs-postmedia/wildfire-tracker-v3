@@ -13,7 +13,7 @@ const center = [55, -125];
 export class WildfireTracker extends Component {
 	map_options = {
 		center: center,
-		classField: 'FIRE_STATU',
+		classField: 'STATUS',
 		maxZoom: 10,
 		minZoom: 3,
 		zoom: zoom

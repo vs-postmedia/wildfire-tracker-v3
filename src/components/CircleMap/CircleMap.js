@@ -33,14 +33,15 @@ export class CircleMap extends Component {
 	}
 
 	addEvacsAlerts(evacsAlerts, firstSymbolId) {
+		console.log(evacsAlerts.features.filter(d => d.properties.EVENT_TYPE === 'Fire'))
 		// add arcgis source
 		this.map.addSource('evacs_alerts_arcgis', {
         	type: 'geojson',
-        	data: evacsAlerts
+        	data: evacsAlerts.features.filter(d => d.properties.EVENT_TYPE === 'Fire')
       	});
 		// add & style layer
       	this.map.addLayer({
-      	  id: 'evacs_alerts_layer',
+      	  id: 'evacs_alerts_arcgis',
       	  type: 'fill',
       	  source: 'evacs_alerts_arcgis',
       	  filter: ['==', ['get', 'EVENT_TYPE'], 'Fire'],
@@ -262,9 +263,13 @@ export class CircleMap extends Component {
 		this.map.on('click', 'wildfires', this.showPopup);
 		this.map.on('mouseenter', 'wildfires', this.showPopup);
 		this.map.on('mouseleave', 'wildfires', this.hidePopup);
-		// this.map.on('mouseenter', 'evacs_alerts', this.showPopup);
-		// this.map.on('mouseleave', 'evacs_alerts', this.hidePopup);
-		
+		// this.map.on('mouseenter', 'evacs_alerts_arcgis', this.showPopup);
+		this.map.on('mouseleave', 'evacs_alerts_arcgis', this.hidePopup);
+
+		this.map.on('mouseenter', 'evacs_alerts_arcgis', d => {
+			console.log(d)
+		});
+
 		// Change the cursor to a pointer when the mouse is over the places layer.
 		this.map.on('mouseenter', 'places', function () {
 			this.map.getCanvas().style.cursor = 'pointer';

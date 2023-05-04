@@ -16,7 +16,7 @@
 	z-index: 100;
 }
 .header {
-	background: var(--brite_purple01);
+	background: var(--grey02);
 	color: #FFF;
 	height: 60px;
 	line-height: 26px;
@@ -26,14 +26,14 @@
 .header .button {
 	position: absolute;
 	right: 5px;
-	bottom: 4px;
+	bottom: 15px;
 }
-.header button.open {
+/* .header button.open {
 	background: green;
 }
 .header button.closed {
 	background: red;
-}
+} */
 
 input[type=checkbox] {
 	height: 0;
@@ -42,7 +42,7 @@ input[type=checkbox] {
 }
 
 label {
-	background: grey;
+	background: var(--grey05);
 	border-radius: 100px;
 	cursor: pointer;
 	display: block;
@@ -54,11 +54,13 @@ label {
 label:after {
 	content: '';
 	position: absolute;
-	top: 0px;
+	top: -2px;
 	left: 0px;
 	width: 20px;
 	height: 20px;
 	background: #fff;
+	background: var(--brite_purple05);
+	border: 2px solid var(--brite_purple01);
 	border-radius: 55%;
 	transition: 0.3s;
 }
@@ -154,10 +156,10 @@ label:active:after {
 		height: calc(var(--mapHeight) - 70px);
 	}
 	.sidebar .header {
-		height: 70px;
+		height: 55px;
 	}
 	.sidebar h2 {
-		font-size: 1.75rem;
+		font-size: 1.5rem;
 		line-height: 60px;
 		padding-top: 0;
 	}

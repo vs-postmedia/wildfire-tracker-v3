@@ -58,7 +58,7 @@ function ListItem(data, clickHandler) {
 		<li key={data.FIRE_ID} id={data.FIRE_ID} className="item" onClick={clickHandler}>
 			<h4 className="title">{name}</h4>
 			<p className="size">{sizeText}</p>
-			<p className="location">{data.GEOGRAPHIC}</p>
+			<p className="location">Location: {data.GEOGRAPHIC}</p>
 		</li>
 	);
 }
