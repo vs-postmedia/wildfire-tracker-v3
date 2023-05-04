@@ -1,7 +1,7 @@
 {
   "name": "bc-wildfire-tracker",
   "homepage": "https://vs-postmedia.github.io/wildfire-tracker-v3/",
-  "version": "0.1.0",
+  "version": "3.0.0",
   "private": true,
   "dependencies": {
     "axios": "^0.21.1",
