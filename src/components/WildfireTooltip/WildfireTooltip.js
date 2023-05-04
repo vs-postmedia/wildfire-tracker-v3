@@ -2,9 +2,12 @@
 import './WildfireTooltip.css';
 
 const WildfireTooltip = (props) => {
+	let name = props.INCIDNT_NM !== null ? props.INCIDNT_NM : props.GEOGRAPHIC;
+	name = name === 'null' ? 'Unnamed fire' : name;
+
 	return `
 		<div>
-			<h3>${props.GEOGRAPHIC}</h3>
+			<h3>${name.replace(' ...', '')}</h3>
 			<p class="status ${props.STATUS.toLowerCase().replace(/\s/g, '-')}">Status: ${props.STATUS}</p>
 			<p>A ${checkSize(props)} fire started on ${props.ignition_date.split(',')[0]}.</p>
 
