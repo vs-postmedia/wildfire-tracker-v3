@@ -2,8 +2,7 @@
 import './WildfireTooltip.css';
 
 const WildfireTooltip = (props) => {
-	let name = props.INCIDNT_NM !== null ? props.INCIDNT_NM : props.GEOGRAPHIC;
-	name = name === 'null' ? 'Unnamed fire' : name;
+	let name = props.fire_name;
 
 	return `
 		<div>

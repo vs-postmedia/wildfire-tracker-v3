@@ -130,7 +130,6 @@ export class CircleMap extends Component {
 	}
 
 	addWildfireLayer(data, firstSymbolId) {
-		console.log(data)
 		this.map.addSource('wildfires', {
 			type: 'geojson',
 			data: data
@@ -160,7 +159,7 @@ export class CircleMap extends Component {
 				'circle-radius': [
 					'*',
 					['get', 'radius'],
-					1
+					1.2
 				],
 				'circle-stroke-width': 0.5,
 				'circle-stroke-color': '#FFF'
@@ -222,7 +221,7 @@ export class CircleMap extends Component {
 		let fire_size = [];
 
 		data.forEach(d => {
-			fire_size.push(parseFloat(d.properties.CURRENT_SI));
+			fire_size.push(parseFloat(d.properties.CURRENT_SZ));
 		});
 		return [Math.min(...fire_size), Math.max(...fire_size)];
 	}
@@ -245,8 +244,11 @@ export class CircleMap extends Component {
 
 		// calculate circle size
 		data.features.forEach((d,i) => {
-			const radius = this.mapRange(this.extent, this.range, d.properties.CURRENT_SI);
-			d.properties.radius = Math.log(radius) * 4;
+			const radius = this.mapRange(this.extent, this.range, d.properties.CURRENT_SZ);
+			d.properties.radius = Math.log(radius) * 3;
+
+			// console.log(radius, d.properties.CURRENT_SZ)
+			// console.log(this.extent, this.range)
 		});
 
 		// reorder array by CURRENT_SI, largest -> smallest
