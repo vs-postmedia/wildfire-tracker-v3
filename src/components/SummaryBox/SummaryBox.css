@@ -1,0 +1,71 @@
+.summary-box {
+	margin: 0 auto;
+	max-width: 750px;
+	text-align: center;
+}
+.App .summary-box h2 {
+	font-family: 'BentonSansCond-Bold', sans-serif;
+	font-weight: 800;
+	margin: 10px 0;
+}
+.summary-box .stat-box {
+	cursor: pointer;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(25%, 1fr));
+	margin: 20px 0 10px 0;
+}
+.summary-box .stat-box .stat {
+	border: 1px solid #FFF;
+	border-radius: 5px;
+	box-shadow: 1px 0px 5px var(--grey04);
+	margin: 0 5%;
+}
+.summary-box .stat-box .stat:hover {
+	border: 1px solid var(--grey04);
+}
+.summary-box .big-num {
+	font-family: 'Shift-Bold', serif;
+	font-size: 2.5rem;
+	font-weight: 800;
+	line-height: 3rem;
+	margin: 0;
+	opacity: 0.8;
+}
+.summary-box .label {
+	color: #6D6E70;
+	font-size: 0.95rem;
+	line-height: 1.25rem;
+	margin: 0;
+	padding-bottom: 5px;
+	text-transform: uppercase;
+}
+
+.summary-box .note {
+	color: var(--grey02);
+	font-family: 'BentonSansCond-RegItalic', sans-serif;
+	font-size: 0.9rem;
+	margin: 0;
+	text-align: left;
+}
+.summary-box .last-update {
+	font-family: 'BentonSansCond-RegItalic', sans-serif;
+	font-style: italic;
+	font-size: 0.8em;
+	margin: 10px 0;
+}
+
+.summary-box a,
+.summary-box a:visited {
+	color: var(--grey02);
+}
+
+
+@media (min-width: 500px) {
+	.summary-box .big-num {
+		font-size: 3.5rem;
+		line-height: 4rem;
+	}
+	.summary-box .label {
+		font-size: 1.5rem;
+	}
+}

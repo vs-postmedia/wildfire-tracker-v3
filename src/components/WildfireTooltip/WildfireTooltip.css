@@ -1,0 +1,22 @@
+.maplibregl-popup-content {
+	white-space: normal;
+}
+.maplibregl-popup-content {
+	padding: 10px;
+	width: 165px;
+}
+.maplibregl-popup-content h3 {
+	font-family: 'BentonSansCond-Bold', sans-serif;
+	font-size: 1.25rem;
+	margin: 5px 0;
+}
+
+.maplibregl-popup-content p {
+	font-size: 0.95rem;
+	margin: 5px 0;
+	line-height: 1.1;
+}
+
+.maplibregl-popup-content .status {
+	font-family: 'BentonSansCond-Bold', sans-serif;
+}

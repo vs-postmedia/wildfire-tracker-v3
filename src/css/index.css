@@ -1,0 +1,35 @@
+@import './normalize.css';
+@import './fonts.css';
+@import './colors.css';
+
+body {
+	margin: 0;
+	padding: 0.25rem;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.App {
+	margin: 0 auto;
+	max-width: 750px;
+}
+.App h1 {
+	font-family: Shift-BoldItalic, serif;
+	font-size: 1.75rem;
+	margin-bottom: 0.5rem;
+}
+.App h2 {
+	font-family: BentonSansCond-Bold, serif;
+/*	margin: 15px 0;*/
+}
+.App h3 {
+	font-family: BentonSansCond-Bold, serif;
+}
+
+.App p {
+	font-family: BentonSansCond-Regular, Helvetica, sans-serif;
+	line-height: 1.25rem;
+}

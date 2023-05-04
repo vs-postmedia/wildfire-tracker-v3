@@ -1,0 +1,12 @@
+.thumbnail-card {
+	flex: 0 45%;
+	margin: auto;
+}
+
+.thumbnail-card h3 {
+	margin-bottom: 3px;
+}
+.thumbnail-card p {
+	font-size: 0.9rem;
+	margin: 5px 0;
+}

@@ -1,0 +1,34 @@
+/* SHIFT */
+@font-face {
+	font-family: 'Shift-Bold';
+	src: local('Shift-Bold'), url('../fonts/Shift-Bold.otf') format('opentype');
+}
+@font-face {
+	font-family: 'Shift-BoldItalic';
+	src: local(Shift-BoldItalic), url('../fonts/Shift-BoldItalic.otf') format('opentype');
+}
+
+/* BENTON SANS */
+@font-face {
+	font-family: 'BentonSansCond-Regular';
+	src: local('BentonSansCond-Regular'), url('../fonts/BentonSansCond-Regular.otf') format('opentype');
+}
+@font-face {
+	font-family: 'BentonSansCond-RegItalic';
+	src: local('BentonSansCond-RegItalic'), url('../fonts/BentonSansCond-RegItalic.otf') format('opentype');
+}
+@font-face {
+	font-family: 'BentonSansCond-Bold';
+	src: local('BentonSansCond-Bold'), url('../fonts/BentonSansCond-Bold.otf') format('opentype');
+}
+@font-face {
+	font-family: 'BentonSansCond-BoldItalic';
+	src: local('BentonSansCond-BoldItalic'), url('../fonts/BentonSansCond-BoldItalic.otf') format('opentype');
+}
+
+
+:root {
+	--boldB: 'BentonSansCond-Bold';
+	--italicB: 'BentonSansCond-RegItalic';
+	--regB: 'BentonSansCond-Regular';
+}

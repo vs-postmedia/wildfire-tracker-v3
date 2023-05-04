@@ -1,0 +1,32 @@
+[
+	{
+		"fire_center_id": "166",
+		"id": "3",
+		"name": "Northwest"
+	},
+	{
+		"fire_center_id": "165",
+		"id": "2",
+		"name": "Prince George"
+	},
+	{
+		"fire_center_id": "164",
+		"id": "4",
+		"name": "Coastal"
+	},
+	{
+		"fire_center_id": "163",
+		"id": "6",
+		"name": "Cariboo"
+	},
+	{
+		"fire_center_id": "162",
+		"id": "5",
+		"name": "Kamloops"
+	},
+	{
+		"fire_center_id": "161",
+		"id": "1",
+		"name": "Southeast"
+	}
+]

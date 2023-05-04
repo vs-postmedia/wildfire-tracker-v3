@@ -1,0 +1,31 @@
+.App h1 {
+	font-size: 1.8rem;
+	margin: 10px 0;
+}
+.new,
+.out-of-control {
+	fill: #DD2D25;
+	color: #DD2D25;
+}
+.out {
+	fill: #6D6E70;
+	color: #6D6E70;
+}
+.being-held {
+	fill: #F26B21;
+	color: #F26B21;
+}
+.under-control {
+	fill: #0062A3;
+	color: #0062A3;
+}
+.fire-of-note {
+	fill: purple;
+	color: purple;
+}
+
+@media (min-width: 500px) {
+	.App h1 {
+		font-size: 2.25rem;
+	}
+}
