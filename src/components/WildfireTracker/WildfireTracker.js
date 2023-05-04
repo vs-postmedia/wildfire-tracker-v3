@@ -25,8 +25,11 @@ export class WildfireTracker extends Component {
 					data: noOut,
 					data_all: resp.data,
 				});
+
 				// prep the fires of Note
-				this.setupFiresOfNote(resp.data);
+				this.setState({
+					data_fon: noOut.features.filter(d => d.properties.STATUS === 'Fire of Note')
+				});
 
 				// download alert & evacuation perimeter data
 				this.fetchEvacs(this.props.evacsAlertsUrl);
@@ -44,38 +47,6 @@ export class WildfireTracker extends Component {
 						data_evacs: results.data
 					});
 				}
-			});
-	}
-
-	setupFiresOfNote(data) {
-		const promises = [];
-
-		promises.push(Axios.get(this.props.fonData));
-		// promises.push(Axios.get(this.props.firePerimeters));
-
-		Axios.all(promises)
-			.then(results => {
-				// separate our results
-				const fon_data = results.filter(d => d.config.url.includes('fon.json'))[0].data;
-				// const perim_data = results.filter(d => d.config.url.includes('perimeters.json'))[0].data;
-
-				// get fons from the main data set & merge the details
-				const fires_of_note = data.features.filter(d => {
-					if (d.properties.STATUS === 'Fire of Note') {
-						// get details of the fire of note
-						const fon = fon_data.filter(fon => fon.fire_id === d.properties.FIRE_NT_ID)[0];
-
-						// merge data
-						d.properties = {...fon, ...d.properties};
-
-						return d;
-					}
-				}).filter(d => d.properties.fire_name);
-
-				// update our state with the new data 
-				this.setState({
-					data_fon: fires_of_note
-				});
 			});
 	}
 
@@ -100,7 +71,7 @@ export class WildfireTracker extends Component {
 	flyToLocation(e) {
 		// console.log(e.target.parentNode.id)
 		this.setState({
-			selected_feature: this.state.data_fon.filter(d => parseInt(d.properties.fire_id) === parseInt(e.target.parentNode.id))[0]
+			selected_feature: this.state.data_fon.filter(d => parseInt(d.properties.FIRE_ID) === parseInt(e.target.parentNode.id))[0]
 		});
 	}
 

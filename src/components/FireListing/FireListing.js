@@ -4,17 +4,14 @@ import './FireListing.css';
 
 let buttonStatus = 'open';
 const FireListing = (props) => {
-	// console.log(props.data)
 	let list;
-	const fon = props.data.length > 0 ? props.data.filter(d => d.properties.FIRE_STATU === 'Fire of Note') : [];
-
-	console.log(fon)
+	const fon = props.data;
 
 	// NO FON? HIDE SIDEBAR
 	if (fon.length > 0) {
 		// YES FON
 		list = fon.sort((a,b) => {
-				return b.properties.CURRENT_SI - a.properties.CURRENT_SI
+				return b.properties.CURRENT_SZ - a.properties.CURRENT_SZ
 			})
 			.map(d => {
 				return ListItem(d.properties, props.flyToLocation);
@@ -53,15 +50,15 @@ const FireListing = (props) => {
 }
 
 function ListItem(data, clickHandler) {
-	const size = Math.round((data.CURRENT_SI / 100) * 10) / 10;
-	const name = data.FIRE_NT_NM; // data.fire_name.split(' (')[0]
+	const size = Math.round((data.CURRENT_SZ / 100) * 10) / 10;
+	const name = data.FIRE_NUM; // data.fire_name.split(' (')[0]
 
 	const sizeText = size > 0.1 ? `${size} sq. km` : 'Spot fire';
 	return (
-		<li key={data.FIRE_NUMBE} id={data.fire_id} className="item" onClick={clickHandler}>
+		<li key={data.FIRE_ID} id={data.FIRE_ID} className="item" onClick={clickHandler}>
 			<h4 className="title">{name}</h4>
 			<p className="size">{sizeText}</p>
-			<p className="location">{data.location}</p>
+			<p className="location">{data.GEOGRAPHIC}</p>
 		</li>
 	);
 }
