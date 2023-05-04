@@ -1,5 +1,5 @@
- # wildfire-tracker-dev
-Development build for the wildfire tracker.
+ # wildfire-tracker
+ Web app for tracking wildfires and wildfire smoke in B.C.
 
 Based off of current fire locations found at: `https://catalogue.data.gov.bc.ca/dataset/fire-locations-current`
 
@@ -9,11 +9,10 @@ Fire smoke data from firesmoke.ca.
 fire-smoke.js pulls png from kmz file hosted on firesmoke, reprojects to EPSG:3857 & uploads to digiO.,
 
 ### 
-Data is pulled from Heroku app – `fast-forest-46102` – that runs once an hour. Provincial wildfire data is updated daily at midnight.
-
+Data is pulled from `bc-wildfire-scraper` github repo: https://github.com/vs-postmedia/bc-wildfire-scraper
 
 
 
 ###
 EMBED
-[protected-iframe info="https://vs-postmedia.github.io/wildfire-tracker-dev/" frameborder="0" height="700" width="100%"]
+[protected-iframe info="https://vs-postmedia.github.io/wildfire-tracker-v3/" frameborder="0" height="700" width="100%"]
