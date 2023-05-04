@@ -33,11 +33,10 @@ export class CircleMap extends Component {
 	}
 
 	addEvacsAlerts(evacsAlerts, firstSymbolId) {
-		console.log(evacsAlerts.features.filter(d => d.properties.EVENT_TYPE === 'Fire'))
 		// add arcgis source
 		this.map.addSource('evacs_alerts_arcgis', {
         	type: 'geojson',
-        	data: evacsAlerts.features.filter(d => d.properties.EVENT_TYPE === 'Fire')
+        	data: evacsAlerts
       	});
 		// add & style layer
       	this.map.addLayer({
