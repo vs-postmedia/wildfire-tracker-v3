@@ -26,14 +26,9 @@
 .header .button {
 	position: absolute;
 	right: 5px;
-	bottom: 15px;
+	bottom: 5px;
 }
-/* .header button.open {
-	background: green;
-}
-.header button.closed {
-	background: red;
-} */
+
 
 input[type=checkbox] {
 	height: 0;
@@ -162,6 +157,9 @@ label:active:after {
 		font-size: 1.5rem;
 		line-height: 60px;
 		padding-top: 0;
+	}
+	.header .button {
+		bottom: 15px;
 	}
 
 }
