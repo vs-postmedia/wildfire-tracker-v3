@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2185c1e44d51e63856218852768b478e",
+    "revision": "323657f1f7f97e83434012b12e8a966b",
     "url": "/wildfire-tracker-v3/index.html"
   },
   {
-    "revision": "01cefeee49d16ec57719",
-    "url": "/wildfire-tracker-v3/static/css/main.f794980f.chunk.css"
+    "revision": "9da8b33bfcf99a816547",
+    "url": "/wildfire-tracker-v3/static/css/main.5d6ffdc1.chunk.css"
   },
   {
-    "revision": "78024861aa6abf918e42",
-    "url": "/wildfire-tracker-v3/static/js/2.46936c43.chunk.js"
+    "revision": "30b53eefe01883f86107",
+    "url": "/wildfire-tracker-v3/static/js/2.20971d57.chunk.js"
   },
   {
     "revision": "e88a3e95b5364d46e95b35ae8c0dc27d",
-    "url": "/wildfire-tracker-v3/static/js/2.46936c43.chunk.js.LICENSE.txt"
+    "url": "/wildfire-tracker-v3/static/js/2.20971d57.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "01cefeee49d16ec57719",
-    "url": "/wildfire-tracker-v3/static/js/main.8b93792c.chunk.js"
+    "revision": "9da8b33bfcf99a816547",
+    "url": "/wildfire-tracker-v3/static/js/main.373f83e9.chunk.js"
   },
   {
     "revision": "d6448fd0111b443811f0",
