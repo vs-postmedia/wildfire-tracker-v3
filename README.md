@@ -15,4 +15,4 @@ Data is pulled from `bc-wildfire-scraper` github repo: https://github.com/vs-pos
 
 ###
 EMBED
-[protected-iframe info="https://vs-postmedia.github.io/wildfire-tracker-v3/" frameborder="0" height="700" width="100%"]
+[protected-iframe info="https://vs-postmedia.github.io/wildfire-tracker-v3/" height="700"]
