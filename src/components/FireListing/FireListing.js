@@ -56,9 +56,9 @@ function ListItem(data, clickHandler) {
 	const sizeText = size > 0.1 ? `${size} sq. km` : 'Spot fire';
 	return (
 		<li key={data.FIRE_ID} id={data.FIRE_ID} className="item" onClick={clickHandler}>
-			<h4 className="title">{name}</h4>
+			<h4 className="title">{data.GEOGRAPHIC}</h4>
 			<p className="size">{sizeText}</p>
-			<p className="location">Location: {data.GEOGRAPHIC}</p>
+			<p className="location">Started: {data.ignition_date}</p>
 		</li>
 	);
 }
