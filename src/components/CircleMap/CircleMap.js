@@ -9,10 +9,9 @@ import './CircleMap.css';
 import legend from '../../images/firesmoke-legend-v2.png';
 
 // VARS
-const evacColor = '#E35D42';
+const evacColor = '#F6B31C';
 const alertColor = '#A7A9AB';
-// const alertColor = '#F6B31C';
-const evacZoomLevel = 6;
+const evacZoomLevel = 10;
 const evacMinSize = 220000000;
 
 export class CircleMap extends Component {
@@ -29,6 +28,8 @@ export class CircleMap extends Component {
 
 		// bind popup to main component
 		this.showPopup = this.showPopup.bind(this);
+		this.showEvacPopup = this.showEvacPopup.bind(this);
+		this.showPerimeterPopup = this.showPerimeterPopup.bind(this);
 		this.hidePopup = this.hidePopup.bind(this);
 	}
 
@@ -56,7 +57,7 @@ export class CircleMap extends Component {
       	      '#A7A9AB',
       	      '#A7A9AB'
       	    ],
-      	    'fill-opacity': 0.7
+      	    'fill-opacity': 0.5
       	  }
       	// place layer underneath this layer
       	}, firstSymbolId);		
@@ -126,7 +127,27 @@ export class CircleMap extends Component {
 	}
 
 	addFiresmokeLegend() {
+	}
 
+	addFirePerimetersLayer(firePerimetersData, firstSymbolId) {
+		if (!firePerimetersData || !firePerimetersData.features || firePerimetersData.features.length === 0) {
+			return;
+		}
+
+		this.map.addSource('fire-perimeters', {
+			type: 'geojson',
+			data: firePerimetersData
+		});
+		this.map.addLayer({
+			id: 'fire-perimeters',
+			type: 'fill',
+			source: 'fire-perimeters',
+			paint: {
+				'fill-color': '#DD2D25',
+				'fill-opacity': 0.4,
+				'fill-outline-color': '#DD2D25'
+			}
+		}, firstSymbolId);
 	}
 
 	addWildfireLayer(data, firstSymbolId) {
@@ -199,6 +220,9 @@ export class CircleMap extends Component {
 			if (this.props.data !== prevProps.data) {
 			    this.map.getSource('wildfires').setData(this.props.data);
 			}
+			if (this.props.firePerimetersData !== prevProps.firePerimetersData && this.map.getSource('fire-perimeters')) {
+				this.map.getSource('fire-perimeters').setData(this.props.firePerimetersData);
+			}
 		} else {
 			this.renderMap(this.props.data);
 		}
@@ -262,12 +286,12 @@ export class CircleMap extends Component {
 		this.map.on('click', 'wildfires', this.showPopup);
 		this.map.on('mouseenter', 'wildfires', this.showPopup);
 		this.map.on('mouseleave', 'wildfires', this.hidePopup);
-		// this.map.on('mouseenter', 'evacs_alerts_arcgis', this.showPopup);
+		this.map.on('mouseenter', 'evacs_alerts_arcgis', this.showEvacPopup);
+		this.map.on('mousemove', 'evacs_alerts_arcgis', this.showEvacPopup);
 		this.map.on('mouseleave', 'evacs_alerts_arcgis', this.hidePopup);
-
-		this.map.on('mouseenter', 'evacs_alerts_arcgis', d => {
-			console.log(d)
-		});
+		this.map.on('mouseenter', 'fire-perimeters', this.showPerimeterPopup);
+		this.map.on('mousemove', 'fire-perimeters', this.showPerimeterPopup);
+		this.map.on('mouseleave', 'fire-perimeters', this.hidePopup);
 
 		// Change the cursor to a pointer when the mouse is over the places layer.
 		this.map.on('mouseenter', 'places', function () {
@@ -282,6 +306,42 @@ export class CircleMap extends Component {
 
 	setupPopupText(properties) {
 		return WildfireTooltip(properties);
+	}
+
+	getEvacPopupContent(status) {
+		const normalizedStatus = String(status || '').trim().toLowerCase();
+		const isOrder = normalizedStatus === 'order';
+		const color = isOrder ? evacColor : normalizedStatus === 'alert' ? alertColor : '#A7A9AB';
+		const label = isOrder ? 'Evacuation order' : 'Evacuation alert';
+		return `<h2 style="color:${color}; font-size:1.25rem; font-weight:700; margin:0;">${label}</h2>`;
+	}
+
+	showEvacPopup(e) {
+		const feature = e.features && e.features[0];
+		if (!feature) {
+			return;
+		}
+
+		const status = feature.properties && feature.properties.ORDER_ALERT_STATUS;
+		this.map.getCanvas().style.cursor = 'pointer';
+		this.popup
+			.setLngLat(e.lngLat)
+			.setHTML(this.getEvacPopupContent(status))
+			.addTo(this.map);
+	}
+
+	showPerimeterPopup(e) {
+		const feature = e.features && e.features[0];
+		if (!feature) {
+			return;
+		}
+
+		const properties = feature.properties || {};
+		this.map.getCanvas().style.cursor = 'pointer';
+		this.popup
+			.setLngLat(e.lngLat)
+			.setHTML(this.setupPopupText(properties))
+			.addTo(this.map);
 	}
 
 	showPopup(e, sidebarClick) {
@@ -332,6 +392,9 @@ export class CircleMap extends Component {
 				if (this.props.evacsAlerts !== undefined) {
 					clearInterval(interval);
 					this.addEvacsAlerts(this.props.evacsAlerts, firstSymbolId);
+
+					// fire perimeters
+					this.addFirePerimetersLayer(this.props.firePerimetersData, firstSymbolId);
 				}
 			}, 1000)
 

@@ -8,6 +8,7 @@ export class WildfireTracker extends Component {
 		data: [],
 		data_all: [],
 		data_fon: [],
+		data_perimeters: [],
 		selected_feature: null
 	}
 
@@ -33,6 +34,7 @@ export class WildfireTracker extends Component {
 
 				// download alert & evacuation perimeter data
 				this.fetchEvacs(this.props.evacsAlertsUrl);
+				this.fetchFirePerimeters(this.props.firePerimeters);
 			});
 
 		this.flyToLocation = this.flyToLocation.bind(this);
@@ -45,6 +47,17 @@ export class WildfireTracker extends Component {
 				if (results.status === 200) {
 					this.setState({
 						data_evacs: results.data
+					});
+				}
+			});
+	}
+
+	fetchFirePerimeters(url) {
+		Axios.get(url)
+			.then(results => {
+				if (results.status === 200) {
+					this.setState({
+						data_perimeters: results.data
 					});
 				}
 			});
@@ -112,6 +125,7 @@ export class WildfireTracker extends Component {
 					data_evacs={this.state.data_evacs}
 					data_fon={this.state.data_fon}
 					fireSmokeUrl={this.props.fireSmokeUrl}
+					firePerimetersData={this.state.data_perimeters}
 					mapboxStyle={this.props.mapboxStyle}
 					tiles={this.props.tiles}
 					flyToLocation={this.flyToLocation}
