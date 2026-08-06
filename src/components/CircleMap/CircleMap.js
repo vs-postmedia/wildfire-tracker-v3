@@ -17,10 +17,12 @@ const evacMinSize = 220000000;
 export class CircleMap extends Component {
 	map;
 	state = {};
+	isPopupPinned = false;
+	ignoreNextOutsideClick = false;
 	// prep the popup
 	popup = new maplibregl.Popup({
 		closeButton: false,
-		closeOnClick: true
+		closeOnClick: false
 	});
 
 	constructor(props) {
@@ -31,6 +33,7 @@ export class CircleMap extends Component {
 		this.showEvacPopup = this.showEvacPopup.bind(this);
 		this.showPerimeterPopup = this.showPerimeterPopup.bind(this);
 		this.hidePopup = this.hidePopup.bind(this);
+		this.handleMapClick = this.handleMapClick.bind(this);
 	}
 
 	addEvacsAlerts(evacsAlerts, firstSymbolId) {
@@ -250,8 +253,25 @@ export class CircleMap extends Component {
 		return [Math.min(...fire_size), Math.max(...fire_size)];
 	}
 
+	handleMapClick() {
+		if (!this.isPopupPinned) {
+			return;
+		}
+
+		if (this.ignoreNextOutsideClick) {
+			this.ignoreNextOutsideClick = false;
+			return;
+		}
+
+		this.isPopupPinned = false;
+		this.hidePopup();
+	}
+
 	hidePopup() {
 		this.map.getCanvas().style.cursor = '';
+		if (this.isPopupPinned) {
+			return;
+		}
 		this.popup.remove();
 	}
 
@@ -283,15 +303,28 @@ export class CircleMap extends Component {
 
 	setupPopupHandlers() {
 		// show & hide the popup
-		this.map.on('click', 'wildfires', this.showPopup);
-		this.map.on('mouseenter', 'wildfires', this.showPopup);
+		this.map.on('click', 'wildfires', (e) => {
+			this.ignoreNextOutsideClick = true;
+			this.showPopup(e, false, true);
+		});
+		this.map.on('mouseenter', 'wildfires', (e) => this.showPopup(e, false, false));
+		this.map.on('mousemove', 'wildfires', (e) => this.showPopup(e, false, false));
 		this.map.on('mouseleave', 'wildfires', this.hidePopup);
-		this.map.on('mouseenter', 'evacs_alerts_arcgis', this.showEvacPopup);
-		this.map.on('mousemove', 'evacs_alerts_arcgis', this.showEvacPopup);
+		this.map.on('click', 'evacs_alerts_arcgis', (e) => {
+			this.ignoreNextOutsideClick = true;
+			this.showEvacPopup(e, true);
+		});
+		this.map.on('mouseenter', 'evacs_alerts_arcgis', (e) => this.showEvacPopup(e, false));
+		this.map.on('mousemove', 'evacs_alerts_arcgis', (e) => this.showEvacPopup(e, false));
 		this.map.on('mouseleave', 'evacs_alerts_arcgis', this.hidePopup);
-		this.map.on('mouseenter', 'fire-perimeters', this.showPerimeterPopup);
-		this.map.on('mousemove', 'fire-perimeters', this.showPerimeterPopup);
+		this.map.on('click', 'fire-perimeters', (e) => {
+			this.ignoreNextOutsideClick = true;
+			this.showPerimeterPopup(e, true);
+		});
+		this.map.on('mouseenter', 'fire-perimeters', (e) => this.showPerimeterPopup(e, false));
+		this.map.on('mousemove', 'fire-perimeters', (e) => this.showPerimeterPopup(e, false));
 		this.map.on('mouseleave', 'fire-perimeters', this.hidePopup);
+		this.map.on('click', this.handleMapClick);
 
 		// Change the cursor to a pointer when the mouse is over the places layer.
 		this.map.on('mouseenter', 'places', function () {
@@ -316,35 +349,36 @@ export class CircleMap extends Component {
 		return `<h2 style="color:${color}; font-size:1.25rem; font-weight:700; margin:0;">${label}</h2>`;
 	}
 
-	showEvacPopup(e) {
+	showEvacPopup(e, pin = false) {
 		const feature = e.features && e.features[0];
 		if (!feature) {
 			return;
 		}
 
 		const status = feature.properties && feature.properties.ORDER_ALERT_STATUS;
-		this.map.getCanvas().style.cursor = 'pointer';
-		this.popup
-			.setLngLat(e.lngLat)
-			.setHTML(this.getEvacPopupContent(status))
-			.addTo(this.map);
+		this.showFeaturePopup(e.lngLat, this.getEvacPopupContent(status), pin);
 	}
 
-	showPerimeterPopup(e) {
+	showPerimeterPopup(e, pin = false) {
 		const feature = e.features && e.features[0];
 		if (!feature) {
 			return;
 		}
 
 		const properties = feature.properties || {};
+		this.showFeaturePopup(e.lngLat, this.setupPopupText(properties), pin);
+	}
+
+	showFeaturePopup(coords, text, pin = false) {
 		this.map.getCanvas().style.cursor = 'pointer';
+		this.isPopupPinned = pin;
 		this.popup
-			.setLngLat(e.lngLat)
-			.setHTML(this.setupPopupText(properties))
+			.setLngLat(coords)
+			.setHTML(text)
 			.addTo(this.map);
 	}
 
-	showPopup(e, sidebarClick) {
+	showPopup(e, sidebarClick, pin = false) {
 		// console.log(e)
 		let coords, text;
 
@@ -358,14 +392,8 @@ export class CircleMap extends Component {
 			coords = e.lngLat;
 			text = this.setupPopupText(e.features[0].properties);
 		}
-		// change cursor style as UI indicator
-		this.map.getCanvas().style.cursor = 'pointer';
 
-		// set coords based on mouse position
-		this.popup.setLngLat(coords)
-			// popup content to be displayed
-			.setHTML(text)
-			.addTo(this.map)
+		this.showFeaturePopup(coords, text, pin);
 	}
 
 	renderMap(data) {
